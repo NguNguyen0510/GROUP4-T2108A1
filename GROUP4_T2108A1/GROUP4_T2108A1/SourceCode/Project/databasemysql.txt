@@ -1,0 +1,66 @@
+CREATE TABLE Product (
+	P_ID integer primary key AUTO_INCREMENT NOT NULL,
+	P_name varchar(25) NOT NULL,
+	P_Desc varchar(25) NOT NULL,
+	P_Qty float(25) NOT NULL,
+	P_type varchar(25) NOT NULL,
+	Price decimal NOT NULL,
+	IMG text NOT NULL
+);
+CREATE TABLE Customer (
+	C_ID integer primary key AUTO_INCREMENT NOT NULL,
+	C_Name varchar(255) NOT NULL,
+	C_birth datetime NOT NULL,
+	C_gender varchar(25) NOT NULL,
+	C_phone varchar(25) NOT NULL
+);
+CREATE TABLE Seller(
+	S_ID integer primary key AUTO_INCREMENT NOT NULL,
+	S_name varchar(25) NOT NULL,
+	S_phone varchar(25) NOT NULL
+);
+
+DROP TABLE IF EXISTS `Orders`;
+CREATE TABLE IF NOT EXISTS `Orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `C_Name` varchar(255) NOT NULL,
+  `C_Phone` varchar(255) DEFAULT NULL,
+  `note` text NOT NULL,
+   status varchar(55),
+  `total` int(11) NOT NULL,
+  `created_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_updated` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `Order_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `P_ID` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `created_time` datetime NOT NULL,
+  `last_updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  KEY `P_ID` (`P_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `Order_details`
+  ADD CONSTRAINT `Order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `Orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Order_details_ibfk_2` FOREIGN KEY (`P_ID`) REFERENCES `product` (`P_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+
+
+
+CREATE TABLE users(
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(50) NOT NULL UNIQUE,
+password VARCHAR(255) NOT NULL,
+create_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE admin(
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(50) NOT NULL UNIQUE,
+password VARCHAR(255) NOT NULL,
+create_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
